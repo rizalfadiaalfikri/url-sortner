@@ -1,4 +1,4 @@
-package io.orbion.url_shortner_be.config;
+package io.orbion.url_shortner_be.entity.request;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -9,8 +9,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class JwtAuthenticationResponse {
-
-    private String token;
-
+public class LoginRequest {
+    private String username;
+    private String password;
 }

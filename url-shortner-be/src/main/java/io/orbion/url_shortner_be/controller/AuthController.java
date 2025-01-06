@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import io.orbion.url_shortner_be.entity.model.User;
+import io.orbion.url_shortner_be.entity.request.LoginRequest;
 import io.orbion.url_shortner_be.entity.request.RegisterRequest;
 import io.orbion.url_shortner_be.service.UserService;
 
@@ -31,5 +32,10 @@ public class AuthController {
 
         userService.register(user);
         return ResponseEntity.ok("User registered successfully");
+    }
+
+    @PostMapping("/public/login")
+    public ResponseEntity<?> login(@RequestBody LoginRequest request) {
+        return ResponseEntity.ok(userService.login(request));
     }
 }
