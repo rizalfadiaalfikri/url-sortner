@@ -44,6 +44,13 @@ public class WebSecurityConfig {
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/api/auth/**").permitAll()
                         .requestMatchers("/api/urls/**").authenticated()
+                        .requestMatchers(
+                                "/v3/api-docs/**",
+                                "/swagger-ui/**",
+                                "/v2/api-docs/**",
+                                "/swagger-resources/**",
+                                "/actuator/**")
+                        .permitAll()
                         .requestMatchers("/{shortUrl}").permitAll()
                         .anyRequest().authenticated());
 
