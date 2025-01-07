@@ -94,8 +94,20 @@ public class UrlMappingServiceImpl implements UrlMappingService {
 
     @Override
     public UrlMapping getOriginalUrl(String shortUrl) {
-        return urlMappingRepository.findByShortUrl(shortUrl)
+        UrlMapping urlMapping = urlMappingRepository.findByShortUrl(shortUrl)
                 .orElseThrow(() -> new RuntimeException("short url not found"));
+        if (urlMapping != null) {
+            urlMapping.setClickCount(urlMapping.getClickCount() + 1);
+            urlMappingRepository.save(urlMapping);
+
+            // Record click event
+            ClickEvent clickEvent = ClickEvent.builder()
+                    .urlMapping(urlMapping)
+                    .clickDate(LocalDateTime.now())
+                    .build();
+            clickEventRepository.save(clickEvent);
+        }
+        return urlMapping;
     }
 
 }
