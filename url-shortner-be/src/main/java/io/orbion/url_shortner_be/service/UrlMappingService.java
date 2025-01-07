@@ -5,6 +5,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Map;
 
+import io.orbion.url_shortner_be.entity.model.UrlMapping;
 import io.orbion.url_shortner_be.entity.model.User;
 import io.orbion.url_shortner_be.entity.response.ClickEventResponse;
 import io.orbion.url_shortner_be.entity.response.UrlMappingResponse;
@@ -18,4 +19,6 @@ public interface UrlMappingService {
     List<ClickEventResponse> getAnalyticsByShortUrl(String shortUrl, LocalDateTime start, LocalDateTime end);
 
     Map<LocalDate, Long> getTotalClicksByUser(User user, LocalDate start, LocalDate end);
+
+    UrlMapping getOriginalUrl(String shortUrl);
 }

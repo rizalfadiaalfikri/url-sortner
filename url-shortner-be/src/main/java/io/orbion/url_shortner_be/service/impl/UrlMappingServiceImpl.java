@@ -92,4 +92,10 @@ public class UrlMappingServiceImpl implements UrlMappingService {
 
     }
 
+    @Override
+    public UrlMapping getOriginalUrl(String shortUrl) {
+        return urlMappingRepository.findByShortUrl(shortUrl)
+                .orElseThrow(() -> new RuntimeException("short url not found"));
+    }
+
 }
