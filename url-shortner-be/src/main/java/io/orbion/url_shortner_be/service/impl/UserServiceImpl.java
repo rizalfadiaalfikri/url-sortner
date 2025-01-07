@@ -49,4 +49,10 @@ public class UserServiceImpl implements UserService {
         return JwtAuthenticationResponse.builder().token(token).build();
     }
 
+    @Override
+    public User findByUsername(String username) {
+        return userRepository.findByUsername(username)
+                .orElseThrow(() -> new RuntimeException("User not found"));
+    }
+
 }

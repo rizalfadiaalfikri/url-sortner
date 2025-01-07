@@ -10,4 +10,5 @@ public interface UserService {
 
     JwtAuthenticationResponse login(LoginRequest request);
 
+    User findByUsername(String username);
 }
