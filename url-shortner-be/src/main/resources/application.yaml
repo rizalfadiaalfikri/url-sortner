@@ -14,6 +14,10 @@ spring:
       hibernate:
         dialect: org.hibernate.dialect.MySQL8Dialect
 
+access:
+  allow:
+    origin: "*"
+
 jwt:
   secret: ba383a49ae67b40a56c02aa52548721a7b040aa40ea49a6ffe1d09f828b4873b
   expiration: 172800000

@@ -5,7 +5,7 @@ import { Link, useNavigate } from "react-router-dom";
 import api from "../../public/api/api";
 import toast from "react-hot-toast";
 
-function RegisterPage() {
+function LoginPage() {
 
     const navigate = useNavigate();
     const [loader, setLoader] = useState(false);
@@ -18,27 +18,32 @@ function RegisterPage() {
     } = useForm({
          defaultValues: {
             username: "",
-            email: "",
             password: ""
         },
         mode: "onTouched"
     });
 
-    const registerHandler = async (data) => {
+    const loginHandler = async (data) => {
         setLoader(true);
         console.log(data);
         try {
             const {data: response} = await api.post(
-                "/api/auth/public/register", 
+                "/api/auth/public/login", 
                 data
             );
 
+            console.log(response.token);
+
+            // store token in local storage
+            localStorage.setItem("JWT_TOKEN", JSON.stringify(response.token));
+
+            toast.success("Login Successfully");
+
             reset();
-            navigate('/login')
-            toast.success("Register Successfully");
+            navigate('/')
         } catch (error) {
             console.log(error);
-            toast.error("Register failed");
+            toast.error("Login failed");
         } finally {
             setLoader(false);
         }
@@ -47,11 +52,11 @@ function RegisterPage() {
   return (
     <div className="min-h-[calc(100vh-64px)] flex justify-center items-center">
         <form 
-            onSubmit={handleSubmit(registerHandler)}
+            onSubmit={handleSubmit(loginHandler)}
             className="sm:w-[450px] w-[360px]  shadow-custom py-8 sm:px-8 px-4 rounded-md"
         >
             <h1 className="text-center font-serif text-btnColor font-bold lg:text-3xl text-2xl">
-                Register Here
+                Login Here
             </h1>
 
             <hr className="mt-2 mb-5 text-black"/>
@@ -66,18 +71,6 @@ function RegisterPage() {
                     message="*Username is required"
                     className="w-full"
                     placeholder="Type your username"
-                />
-
-                <TextField
-                    label="Email"
-                    required
-                    id="email"
-                    type="email"
-                    errors={errors}
-                    register={register}
-                    message="*Email is required"
-                    className="w-full"
-                    placeholder="Type your email"
                 />
 
                 <TextField
@@ -99,15 +92,15 @@ function RegisterPage() {
                 type="submit"
                 className="bg-customRed font-semibold text-white  bg-custom-gradient w-full py-2 hover:text-slate-400 transition-colors duration-100 rounded-sm my-3"
             >
-                {loader ? "Loading ..." : "Register"}
+                {loader ? "Loading ..." : "Login"}
             </button>
             <p className="text-center text-sm text-slate-700 mt-6">
-                Already have an account? 
+                Dont have an account? 
                 <Link 
-                    to="/login"
+                    to="/register"
                     className="font-semibold text-sm underline hover:text-black"
                 >
-                    <span className="text-btnColor">Login</span>
+                    <span className="text-btnColor">Register</span>
                 </Link>
             </p>
         </form>
@@ -115,4 +108,4 @@ function RegisterPage() {
   )
 }
 
-export default RegisterPage
+export default LoginPage;
